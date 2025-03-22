@@ -6,10 +6,12 @@ import { HydrateClient } from "~/trpc/server";
 // import RelatedPosts from "~/app/_components/RelatedPosts";
 import { api } from "~/trpc/server";
 
+// Update the type to match Next.js requirements
 type BlogPostPageProps = {
   params: {
     slug: string;
   };
+  searchParams?: Record<string, string | string[] | undefined>;
 };
 
 // Format date for display
@@ -66,7 +68,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="mb-4 flex flex-wrap gap-2">
             {post.tags &&
               post.tags.length > 0 &&
-              post.tags.map((tag, index) => (
+              post.tags.map((tag: string, index: number) => (
                 <Link
                   key={index}
                   href={`/blog?tag=${tag}`}
@@ -149,7 +151,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             />
           ) : (
             <div className="prose prose-lg max-w-none">
-              {post.content.split("\n").map((paragraph, idx) =>
+              {post.content.split("\n").map((paragraph: string, idx: number) =>
                 paragraph.trim() ? (
                   <p key={idx} className="font-body mb-4 text-gray-700">
                     {paragraph}
